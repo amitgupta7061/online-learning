@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@clerk/nextjs": "^6.19.3",
+    "@google/genai": "^1.4.0",
     "@neondatabase/serverless": "^1.0.0",
     "@radix-ui/react-dialog": "^1.1.13",
     "@radix-ui/react-select": "^2.2.4",
@@ -23,15 +24,17 @@
     "dotenv": "^16.5.0",
     "drizzle-orm": "^0.43.1",
     "lucide-react": "^0.510.0",
+    "mime": "^4.0.7",
     "next": "15.3.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
-    "tailwind-merge": "^3.3.0"
+    "tailwind-merge": "^3.3.0",
+    "uuid": "^11.1.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
+    "@types/node": "^20.17.58",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "drizzle-kit": "^0.31.1",

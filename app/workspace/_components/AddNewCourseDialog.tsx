@@ -18,12 +18,15 @@ import {
 } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { Sparkle } from "lucide-react";
+import axios from "axios";
+import { Loader2Icon, Sparkle } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { v4 as uuidv4 } from 'uuid';
 
-// Step 1: Define the form data type
+
 interface CourseFormData {
-  courseName: string;
+  name: string;
   description?: string;
   noOfChapter: number;
   includeVideo: boolean;
@@ -38,7 +41,7 @@ const AddNewCourseDialog = ({
   children: React.ReactNode;
 }) => {
   const [formData, setFormData] = useState<CourseFormData>({
-    courseName: "",
+    name: "",
     description: "",
     noOfChapter: 0,
     includeVideo: false,
@@ -57,8 +60,19 @@ const AddNewCourseDialog = ({
     }));
   };
 
-  const onGenerate = () => {
-    console.log(formData);
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const onGenerate = async () => {
+    setLoading(true);
+    const courseId = uuidv4();
+    const response = await axios.post('/api/generate-course-layout', {
+      ...formData,
+      courseId:courseId
+    })
+    console.log(response.data);
+    setLoading(false);
+    router.push('/workspace/edit-course/'+courseId);
   }
 
   return (
@@ -74,7 +88,7 @@ const AddNewCourseDialog = ({
                 <Input
                   placeholder="Enter course name"
                   onChange={(e) =>
-                    onHandleInputChange("courseName", e.target.value)
+                    onHandleInputChange("name", e.target.value)
                   }
                 />
               </div>
@@ -136,8 +150,10 @@ const AddNewCourseDialog = ({
                 />
               </div>
               <div className="mt-5">
-                <Button className="w-full" onClick={onGenerate}>
+                <Button className="w-full" onClick={onGenerate} disabled={loading}>
+                  {loading? <Loader2Icon className="animate-spin" /> :
                   <Sparkle className="mr-2 h-4 w-4" />
+                  }
                   Generate Course
                 </Button>
               </div>
