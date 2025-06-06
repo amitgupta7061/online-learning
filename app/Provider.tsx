@@ -18,7 +18,6 @@ const Provider = ({children}: {children: React.ReactNode}) => {
             email: user.primaryEmailAddress?.emailAddress,
           });
           setUserDetails(result.data);
-          console.log(result.data);
         } catch (err) {
           console.error("Failed to create user:", err);
         }

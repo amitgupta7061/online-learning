@@ -14,7 +14,6 @@ export async function POST(req: NextRequest){
             name:name,
             email:email
         }).returning();
-        console.log(result);
         return NextResponse.json(result[0]);
     }
 
