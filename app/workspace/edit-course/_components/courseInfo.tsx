@@ -1,12 +1,19 @@
+"use client";
 import { Button } from '@/components/ui/button';
-import { Book, Clock, TrendingUp } from 'lucide-react';
+import axios from 'axios';
+import { Book, Clock, Loader2Icon, TrendingUp } from 'lucide-react';
 import Image from 'next/image';
-import React from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useState } from 'react';
+import { toast } from 'sonner';
 
 // Define the types
 export interface Chapter {
   id: string;
   title: string;
+  chapterName: string;
+  topics: [];
+  duration: string
 }
 
 export interface CourseData {
@@ -23,6 +30,8 @@ export interface CourseJson {
 export interface Course {
   bannerImageUrl: string;
   courseJson?: CourseJson;
+  name: string,
+  courseId: string
 }
 
 // Component props type
@@ -33,6 +42,28 @@ interface CourseInfoProps {
 const CourseInfo: React.FC<CourseInfoProps> = ({ course }) => {
   const courseInfo = course?.courseJson?.course;
   const bannerImageUrl = course?.bannerImageUrl;
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
+
+  const GenerateCourseContent = async () => {
+  try {
+    setLoading(true);
+    const result = await axios.post('/api/generate-course-content', {
+      courseJson: course?.courseJson?.course,
+      courseTitle: course?.name,
+      courseId: course?.courseId
+    });
+
+    console.log(result.data);
+    router.replace('/workspace');
+    toast.success('Course Generated successfully');
+  } catch (err: any) {
+    console.error("Client Error:", err.response?.data || err.message);
+    toast.error("Server side error! Try again");
+  } finally{
+    setLoading(false);
+  }
+};
 
   return (
     <div className='flex flex-col md:flex-row justify-between gap-5 p-5 rounded-2xl shadow'>
@@ -65,7 +96,7 @@ const CourseInfo: React.FC<CourseInfoProps> = ({ course }) => {
             </section>
           </div>
         </div>
-        <Button>Generate Content</Button>
+        <Button onClick={GenerateCourseContent} disabled={loading}>{loading && <Loader2Icon className="animate-spin" />} Generate Content</Button>
       </div>
 
       <div className='mt-5 md:mt-0'>

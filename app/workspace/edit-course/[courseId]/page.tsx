@@ -4,6 +4,8 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import CourseInfo from "../_components/courseInfo";
 import type { Course } from "../_components/courseInfo"; // import Course type
+import ChapterList from "../_components/chapterList";
+import { Loader2Icon } from "lucide-react";
 
 const EditCourse = () => {
   const params = useParams();
@@ -29,8 +31,9 @@ const EditCourse = () => {
 
   return (
     <div>
-      {loading && <p>Loading...</p>}
+      {loading && <div className="w-full h-60 flex justify-center items-center"><Loader2Icon className="animate-spin"/></div>}
       {!loading && course && <CourseInfo course={course} />}
+      {course && <ChapterList course={course}/>}
     </div>
   );
 };
