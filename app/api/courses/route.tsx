@@ -1,7 +1,7 @@
 import { db } from "@/config/db";
 import { coursesTable } from "@/config/schema";
 import { currentUser } from "@clerk/nextjs/server";
-import { eq } from "drizzle-orm";
+import { desc, eq } from "drizzle-orm";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -28,7 +28,8 @@ export async function GET(req: NextRequest) {
     const result = await db
       .select()
       .from(coursesTable)
-      .where(eq(coursesTable.userEmail, userEmail));
+      .where(eq(coursesTable.userEmail, userEmail))
+      .orderBy(desc(coursesTable.id));
     return NextResponse.json(result);
   }
 }

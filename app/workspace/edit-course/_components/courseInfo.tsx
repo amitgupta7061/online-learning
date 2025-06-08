@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { toast } from 'sonner';
 
 // Define the types
-export interface Chapter {
+interface Chapter {
   id: string;
   title: string;
   chapterName: string;
@@ -16,22 +16,28 @@ export interface Chapter {
   duration: string
 }
 
-export interface CourseData {
+interface CourseData {
   name: string;
   description: string;
   level: string;
   chapters: Chapter[];
+  noOfChapters: number
 }
 
-export interface CourseJson {
+interface CourseJson {
   course: CourseData;
+}
+
+interface courseContent{
+
 }
 
 export interface Course {
   bannerImageUrl: string;
   courseJson?: CourseJson;
   name: string,
-  courseId: string
+  courseId: string,
+  courseContent: courseContent []
 }
 
 // Component props type
