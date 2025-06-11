@@ -32,12 +32,20 @@ interface courseContent{
 
 }
 
+interface courses{
+  bannerImageUrl:string,
+  name: string,
+  description: string,
+  noOfChapters: number
+}
+
 export interface Course {
   bannerImageUrl: string;
   courseJson?: CourseJson;
   name: string,
   courseId: string,
-  courseContent: courseContent []
+  courseContent: courseContent [],
+  courses: courses
 }
 
 // Component props type

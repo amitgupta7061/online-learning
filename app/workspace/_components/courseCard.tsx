@@ -1,16 +1,33 @@
+"use client";
+
 import Image from "next/image";
-import React from "react";
-import type { Course } from "../edit-course/_components/courseInfo";
-import { Book, Edit, PlayCircle } from "lucide-react";
+import React, { useState } from "react";
+import { Course } from '@/lib/types';
+import { Book, Edit, Loader2Icon, PlayCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import axios from "axios";
+import { toast } from "sonner";
 
 const CourseCard = ({ course }: { course: Course }) => {
   const courseJson = course?.courseJson?.course;
+  const [loading, setLoading] = useState(false);
 
-  const onEnrollCourse = () => {
+  const onEnrollCourse = async () => {
+  try {
+    setLoading(true);
+    const result = await axios.post('/api/enroll-course', {
+      courseId: course?.courseId,
+    });
 
+    toast.success(result.data.message || "Enrollment successful");
+    setLoading(false);
+  } catch (error) {
+    toast.error("Server side Error ! Try again");
+    setLoading(false);
   }
+};
+
 
   return (
     <div className="max-w-sm bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-shadow duration-300">
@@ -35,9 +52,9 @@ const CourseCard = ({ course }: { course: Course }) => {
           </span>
           {course?.courseContent?.length ? (
             <Link href={""}>
-              <Button className="flex items-center gap-2" onClick={onEnrollCourse}>
+              <Button className="flex items-center gap-2" onClick={onEnrollCourse} disabled={loading}>
                 <PlayCircle className="w-5 h-5" />
-                Enroll Course
+                Enroll Course {loading && <Loader2Icon  className="animate-spin"/>}
               </Button>
             </Link>
           ) : (
