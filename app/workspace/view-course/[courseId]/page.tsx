@@ -1,4 +1,5 @@
-import EditCourse from "../../edit-course/[courseId]/page";
+import EditCourse from "../../edit-course/_components/EditCourse"
+
 
 const ViewCourse = () => {
   return (
