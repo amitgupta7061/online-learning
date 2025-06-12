@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import { ai } from "../generate-course-layout/route";
 import { GoogleGenAI } from "@google/genai";
 import axios from "axios";
 import { db } from "@/config/db";
@@ -22,6 +21,9 @@ User Input: `;
 
 export async function POST(req: NextRequest) {
   try {
+    const ai = new GoogleGenAI({
+      apiKey: process.env.GEMINI_API_KEY,
+    });
     const { courseJson, courseTitle, courseId } = await req.json();
 
     const promises = courseJson.chapters?.map(async (chapter: any) => {

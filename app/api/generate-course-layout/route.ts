@@ -36,12 +36,12 @@ Schema:
 
 `;
 
-export const ai = new GoogleGenAI({
-    apiKey: process.env.GEMINI_API_KEY,
-  });
 
 export async function POST(req: NextRequest) {
 
+  const ai = new GoogleGenAI({
+    apiKey: process.env.GEMINI_API_KEY,
+  });
 
   const {courseId, ...formData} = await req.json();
   const user = await currentUser();
