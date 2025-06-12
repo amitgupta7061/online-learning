@@ -58,7 +58,7 @@ const AppSidebar = () => {
   return (
     <Sidebar>
       <SidebarHeader className="p-4">
-        <Image src={'/logo.svg'} alt="logo" width={130} height={110}/>
+        <Image src={'/logo.svg'} alt="logo" width={130} height={110} className="w-full p-2"/>
       </SidebarHeader >
       <SidebarContent>
       <SidebarGroup>
