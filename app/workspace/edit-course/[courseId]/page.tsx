@@ -7,7 +7,7 @@ import type { Course } from "../_components/courseInfo"; // import Course type
 import ChapterList from "../_components/chapterList";
 import { Loader2Icon } from "lucide-react";
 
-const EditCourse = () => {
+const EditCourse = ({isViewPage=false}:{isViewPage: boolean}) => {
   const params = useParams();
   const courseId = params.courseId as string;
   const [loading, setLoading] = useState(false);
@@ -32,7 +32,7 @@ const EditCourse = () => {
   return (
     <div>
       {loading && <div className="w-full h-60 flex justify-center items-center"><Loader2Icon className="animate-spin"/></div>}
-      {!loading && course && <CourseInfo course={course} />}
+      {!loading && course && <CourseInfo isViewPage={isViewPage} course={course} />}
       {course && <ChapterList course={course}/>}
     </div>
   );

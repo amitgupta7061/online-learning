@@ -37,7 +37,7 @@ const EnrollCourseCard = ({course}:{ course: Course}) => {
             </div>
             <Progress value={20} />
         </div>
-        <Link className='' href={'/workspace/course/'+courseJson?.courseId}>
+        <Link className='' href={'/workspace/view-course/'+courseJson?.courseId}>
           <Button className="flex items-center w-full gap-2">
                 <PlayCircle className="w-5 h-5" />
                 Continue Learning
